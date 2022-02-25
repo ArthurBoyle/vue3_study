@@ -52,17 +52,23 @@
 </template>
 
 <script>
+import { reactive, toRef } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
   name: "Header",
-  data() {
-    return {
+  setup() {
+    const router = useRouter();
+
+    const data = reactive({
       keyword: ""
+    });
+
+    const goSearch = () => {
+      router.push("/search");
     };
-  },
-  methods: {
-    goSearch() {
-      this.$router.push("/search");
-    }
+
+    return { keyword: toRef(data, "keyword"), goSearch };
   }
 };
 </script>

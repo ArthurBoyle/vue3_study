@@ -1,8 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import Router from "./router";
+import TypeNav from "@/components/TypeNav";
 
-/*const app = createApp(App);
-app.use(Router);
-app.mount("#app");*/
-createApp(App).use(Router).mount("#app");
+createApp(App).use(Router).component("TypeNav", TypeNav).mount("#app");

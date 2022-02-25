@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <!--    <TypeNav />-->
-    <ListContainer />
-    <TodayRecommend />
-    <Rank />
-    <Like />
-    <Floor />
-    <Floor />
-    <Brand />
-  </div>
+  <TypeNav />
+  <ListContainer />
+  <TodayRecommend />
+  <Rank />
+  <Like />
+  <Floor />
+  <Floor />
+  <Brand />
 </template>
 
 <script>

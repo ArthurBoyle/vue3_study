@@ -1,6 +1,7 @@
 <template>
-  <Header></Header>
-  <Footer v-show="$route.meta.show"></Footer>
+  <Header />
+  <router-view />
+  <Footer v-show="$route.meta.show" />
 </template>
 
 <script>

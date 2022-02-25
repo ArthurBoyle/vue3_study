@@ -1,22 +1,8 @@
-// import Vue from "vue";
-// import VueRouter from "vue-router";
 import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Search from "@/pages/Search";
-
-// Vue.use(VueRouter);
-
-/*const originRouter = VueRouter.prototype.push;
-VueRouter.prototype.push = function (location) {
-  return originRouter.call(this, location).catch((err) => err);
-};
-
-const originReplace = VueRouter.prototype.replace;
-VueRouter.prototype.replace = function (location) {
-  return originReplace.call(this, location).catch((err) => err);
-};*/
 
 export default createRouter({
   history: createWebHashHistory(),
