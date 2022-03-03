@@ -51,25 +51,16 @@
   </header>
 </template>
 
-<script>
-import { reactive, toRef } from "vue";
+<script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-export default {
-  name: "Header",
-  setup() {
-    const router = useRouter();
+const router = useRouter();
 
-    const data = reactive({
-      keyword: ""
-    });
+const keyword = ref("");
 
-    const goSearch = () => {
-      router.push("/search");
-    };
-
-    return { keyword: toRef(data, "keyword"), goSearch };
-  }
+const goSearch = () => {
+  router.push("/search");
 };
 </script>
 

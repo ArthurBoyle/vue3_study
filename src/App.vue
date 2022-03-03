@@ -4,14 +4,9 @@
   <Footer v-show="$route.meta.show" />
 </template>
 
-<script>
+<script setup>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-export default {
-  name: "App",
-  components: { Header, Footer }
-};
 </script>
 
 <style></style>

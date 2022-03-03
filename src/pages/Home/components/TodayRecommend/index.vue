@@ -25,11 +25,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TodayRecommend"
-};
-</script>
+<script setup></script>
 
 <style scoped lang="less">
 .today-recommend {

@@ -90,11 +90,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ListContainer"
-};
-</script>
+<script setup></script>
 
 <style scoped lang="less">
 .list-container {

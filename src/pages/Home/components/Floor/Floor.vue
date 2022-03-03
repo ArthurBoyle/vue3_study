@@ -86,11 +86,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Floor"
-};
-</script>
+<script setup></script>
 
 <style scoped lang="less">
 .floor {

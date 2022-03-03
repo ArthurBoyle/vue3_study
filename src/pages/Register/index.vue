@@ -2,10 +2,6 @@
   <div>Register</div>
 </template>
 
-<script>
-export default {
-  name: "Register"
-};
-</script>
+<script setup></script>
 
 <style scoped></style>

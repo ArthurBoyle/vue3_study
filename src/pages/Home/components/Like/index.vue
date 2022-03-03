@@ -55,11 +55,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Like"
-};
-</script>
+<script setup></script>
 
 <style scoped lang="less">
 .like {

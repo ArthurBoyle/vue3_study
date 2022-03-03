@@ -95,11 +95,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Rank"
-};
-</script>
+<script setup></script>
 
 <style lang="less" scoped>
 .rank {
