@@ -1,9 +1,42 @@
 <template>
   <!-- 商品分类导航 -->
   <div class="type-nav">
-    <div>{{ categoryList }}</div>
     <div class="container">
-      <h2 class="all" @click="getCategoryList()">全部商品分类</h2>
+      <div @mouseleave="resetIndex">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2">
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.categoryId"
+              :class="{ 'mouse-hover': currentIndex === index }"
+            >
+              <h3 @mouseenter="changeIndex(index)">
+                <a href="">{{ c1.categoryName }}</a>
+              </h3>
+              <div class="item-list clearfix">
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
+                >
+                  <dl class="fore">
+                    <dt>
+                      <a href="">{{ c2.categoryName }}</a>
+                    </dt>
+                    <dd>
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                        <a href="">{{ c3.categoryName }}</a>
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -14,59 +47,32 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2">
-          <div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
-            <h3>
-              <a href="">{{ c1.categoryName }}</a>
-            </h3>
-            <div class="item-list clearfix">
-              <div
-                class="subitem"
-                v-for="c2 in c1.categoryChild"
-                :key="c2.categoryId"
-              >
-                <dl class="fore">
-                  <dt>
-                    <a href="">{{ c2.categoryName }}</a>
-                  </dt>
-                  <dd>
-                    <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                      <a href="">{{ c3.categoryName }}</a>
-                    </em>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
-<script>
-// import { mapState, mapActions } from "vuex";
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import { useStore } from "vuex";
 
-export default {
-  name: "TypeNav"
-  /*methods: {
-    ...mapActions("home", { getCategoryList: "getCategoryList" })
-  },
-  mounted() {
-    // this.$store.dispatch("home/getCategoryList");
-    this.getCategoryList();
-  },
-  computed: {
-    ...mapState("home", {
-      /!*categoryList(state) {
-        console.log(state);
-        return state.home.categoryList;
-      }*!/
-      categoryList: "categoryList"
-    })
-    // ...mapState("home", ["categoryList"])
-  }*/
+const store = useStore();
+
+const currentIndex = ref(-1);
+
+onMounted(() => {
+  store.dispatch("home/getCategoryList");
+});
+
+const categoryList = computed(() => {
+  return store.state.home.categoryList;
+});
+
+const changeIndex = (index) => {
+  currentIndex.value = index;
+};
+
+const resetIndex = () => {
+  currentIndex.value = -1;
 };
 </script>
 
@@ -104,7 +110,7 @@ export default {
     .sort {
       position: absolute;
       left: 0;
-      top: 45px;
+      top: 47px;
       width: 210px;
       height: 461px;
       background: #fafafa;
@@ -113,7 +119,7 @@ export default {
       .all-sort-list2 {
         .item {
           h3 {
-            line-height: 30px;
+            line-height: 29px;
             font-size: 14px;
             font-weight: 400;
             overflow: hidden;
@@ -186,7 +192,7 @@ export default {
             }
           }
         }
-        .item:hover {
+        .mouse-hover {
           background-color: skyblue;
         }
       }
