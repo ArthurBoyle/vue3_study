@@ -28,7 +28,6 @@ export default createRouter({
     },
     {
       path: "/search",
-      name: "search",
       component: Search,
       meta: { show: true }
     }

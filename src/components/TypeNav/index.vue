@@ -2,18 +2,23 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="resetIndex">
+      <div @mouseleave="handleResetIndex">
         <h2 class="all">全部商品分类</h2>
         <div class="sort">
-          <div class="all-sort-list2">
+          <div class="all-sort-list2" @click="handleSearch($event)">
             <div
               class="item"
               v-for="(c1, index) in categoryList"
               :key="c1.categoryId"
               :class="{ 'mouse-hover': currentIndex === index }"
             >
-              <h3 @mouseenter="changeIndex(index)">
-                <a href="">{{ c1.categoryName }}</a>
+              <h3 @mouseenter="handleChangeIndex(index)">
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                >
+                  {{ c1.categoryName }}
+                </a>
               </h3>
               <div
                 class="item-list clearfix"
@@ -26,11 +31,21 @@
                 >
                   <dl class="fore">
                     <dt>
-                      <a href="">{{ c2.categoryName }}</a>
+                      <a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                      >
+                        {{ c2.categoryName }}
+                      </a>
                     </dt>
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{ c3.categoryName }}</a>
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                        >
+                          {{ c3.categoryName }}
+                        </a>
                       </em>
                     </dd>
                   </dl>
@@ -56,8 +71,10 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
+const router = useRouter();
 const store = useStore();
 
 const currentIndex = ref(-1);
@@ -70,12 +87,28 @@ const categoryList = computed(() => {
   return store.state.home.categoryList;
 });
 
-const changeIndex = (index) => {
+const handleChangeIndex = (index) => {
   currentIndex.value = index;
 };
 
-const resetIndex = () => {
+const handleResetIndex = () => {
   currentIndex.value = -1;
+};
+
+const handleSearch = (event) => {
+  const { categoryname, category1id, category2id, category3id } =
+    event.target.dataset;
+  if (categoryname) {
+    const query = { categoryName: categoryname };
+    if (category1id) {
+      query.category1Id = category1id;
+    } else if (category2id) {
+      query.category2Id = category2id;
+    } else if (category3id) {
+      query.category3Id = category3id;
+    }
+    router.push({ path: "/search", query });
+  }
 };
 </script>
 
