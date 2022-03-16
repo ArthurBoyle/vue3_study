@@ -2,58 +2,68 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="handleResetIndex">
+      <div
+        @mouseenter="data.show = true"
+        @mouseleave="
+          data.currentIndex = -1;
+          data.show = route.path === '/home';
+        "
+      >
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
-          <div class="all-sort-list2" @click="handleSearch($event)">
-            <div
-              class="item"
-              v-for="(c1, index) in categoryList"
-              :key="c1.categoryId"
-              :class="{ 'mouse-hover': currentIndex === index }"
-            >
-              <h3 @mouseenter="handleChangeIndex(index)">
-                <a
-                  :data-categoryName="c1.categoryName"
-                  :data-category1Id="c1.categoryId"
-                >
-                  {{ c1.categoryName }}
-                </a>
-              </h3>
+        <transition name="sort">
+          <div class="sort" v-show="data.show">
+            <div class="all-sort-list2" @click="handleSearch($event)">
               <div
-                class="item-list clearfix"
-                :style="{ display: currentIndex === index ? 'block' : 'none' }"
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.categoryId"
+                :class="{ 'mouse-hover': data.currentIndex === index }"
               >
+                <h3 @mouseenter="data.currentIndex = index">
+                  <a
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                  >
+                    {{ c1.categoryName }}
+                  </a>
+                </h3>
                 <div
-                  class="subitem"
-                  v-for="c2 in c1.categoryChild"
-                  :key="c2.categoryId"
+                  class="item-list clearfix"
+                  :style="{
+                    display: data.currentIndex === index ? 'block' : 'none'
+                  }"
                 >
-                  <dl class="fore">
-                    <dt>
-                      <a
-                        :data-categoryName="c2.categoryName"
-                        :data-category2Id="c2.categoryId"
-                      >
-                        {{ c2.categoryName }}
-                      </a>
-                    </dt>
-                    <dd>
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                  <div
+                    class="subitem"
+                    v-for="c2 in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
                         <a
-                          :data-categoryName="c3.categoryName"
-                          :data-category3Id="c3.categoryId"
+                          :data-categoryName="c2.categoryName"
+                          :data-category2Id="c2.categoryId"
                         >
-                          {{ c3.categoryName }}
+                          {{ c2.categoryName }}
                         </a>
-                      </em>
-                    </dd>
-                  </dl>
+                      </dt>
+                      <dd>
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                          >
+                            {{ c3.categoryName }}
+                          </a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -70,30 +80,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 
 const router = useRouter();
+const route = useRoute();
 const store = useStore();
 
-const currentIndex = ref(-1);
-
-onMounted(() => {
-  store.dispatch("home/getCategoryList");
+const data = reactive({
+  currentIndex: -1,
+  show: route.path === "/home"
 });
 
 const categoryList = computed(() => {
   return store.state.home.categoryList;
 });
-
-const handleChangeIndex = (index) => {
-  currentIndex.value = index;
-};
-
-const handleResetIndex = () => {
-  currentIndex.value = -1;
-};
 
 const handleSearch = (event) => {
   const { categoryname, category1id, category2id, category3id } =
@@ -150,6 +152,7 @@ const handleSearch = (event) => {
       width: 210px;
       height: 461px;
       background: #fafafa;
+      overflow: hidden;
       z-index: 999;
 
       .all-sort-list2 {
@@ -227,6 +230,21 @@ const handleSearch = (event) => {
           background-color: skyblue;
         }
       }
+    }
+
+    .sort-enter-active,
+    .sort-leave-active {
+      transition: all 0.2s;
+    }
+
+    .sort-enter-from,
+    .sort-leave-to {
+      height: 0;
+    }
+
+    .sort-enter-to,
+    .sort-leave-from {
+      height: 461px;
     }
   }
 }
