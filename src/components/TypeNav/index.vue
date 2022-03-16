@@ -152,7 +152,6 @@ const handleSearch = (event) => {
       width: 210px;
       height: 461px;
       background: #fafafa;
-      overflow: hidden;
       z-index: 999;
 
       .all-sort-list2 {
@@ -234,6 +233,7 @@ const handleSearch = (event) => {
 
     .sort-enter-active,
     .sort-leave-active {
+      overflow: hidden;
       transition: all 0.2s;
     }
 
