@@ -109,7 +109,7 @@ const handleSearch = (event) => {
     } else if (category3id) {
       query.category3Id = category3id;
     }
-    router.push({ path: "/search", query });
+    router.push({ name: "search", params: route.params, query });
   }
 };
 </script>

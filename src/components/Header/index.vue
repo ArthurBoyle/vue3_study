@@ -41,7 +41,7 @@
           <button
             class="sui-btn btn-xlarge btn-danger"
             type="button"
-            @click="goSearch"
+            @click="handleSearch"
           >
             搜索
           </button>
@@ -53,14 +53,19 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 const keyword = ref("");
 
-const goSearch = () => {
-  router.push("/search");
+const handleSearch = () => {
+  router.push({
+    name: "search",
+    params: { keyword: keyword.value },
+    query: route.query
+  });
 };
 </script>
 

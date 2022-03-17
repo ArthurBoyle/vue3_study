@@ -27,7 +27,8 @@ export default createRouter({
       meta: { show: false }
     },
     {
-      path: "/search",
+      path: "/search/:keyword?",
+      name: "search",
       component: Search,
       meta: { show: true }
     }
