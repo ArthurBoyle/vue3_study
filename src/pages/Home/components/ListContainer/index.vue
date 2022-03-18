@@ -3,19 +3,24 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <!--        <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <img src="./images/banner1.jpg" alt="" />
             </div>
           </div>
-          <!-- 如果需要分页器 -->
+          &lt;!&ndash; 如果需要分页器 &ndash;&gt;
           <div class="swiper-pagination"></div>
 
-          <!-- 如果需要导航按钮 -->
+          &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-        </div>
+        </div>-->
+        <swiper :modules="[Navigation]" :navigation="true">
+          <swiper-slide v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="item.imgUrl" />
+          </swiper-slide>
+        </swiper>
       </div>
       <div class="right">
         <div class="news">
@@ -90,7 +95,23 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, computed } from "vue";
+import { useStore } from "vuex";
+import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
+import { Navigation } from "swiper";
+import "swiper/swiper-bundle.min.css";
+
+const store = useStore();
+
+onMounted(() => {
+  store.dispatch("home/getBannerList");
+});
+
+const bannerList = computed(() => {
+  return store.state.home.bannerList;
+});
+</script>
 
 <style scoped lang="less">
 .list-container {
