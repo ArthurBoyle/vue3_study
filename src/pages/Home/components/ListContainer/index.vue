@@ -2,7 +2,7 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <swiper :modules="[Navigation]" :navigation="true">
+        <swiper :modules="[Navigation, Pagination]" :navigation="true" :pagination="{ clickable: true }">
           <swiper-slide v-for="item in bannerList" :key="item.id">
             <img :src="item.imgUrl" alt="item.imgUrl" />
           </swiper-slide>
@@ -85,7 +85,7 @@
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
-import { Navigation } from "swiper";
+import { Navigation, Pagination } from "swiper";
 import "swiper/swiper-bundle.min.css";
 
 const store = useStore();

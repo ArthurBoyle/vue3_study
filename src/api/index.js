@@ -15,3 +15,10 @@ export const reqGetBannerList = () => {
     method: "get"
   });
 };
+
+export const reqGetFloorList = () => {
+  return mock({
+    url: "/floor",
+    method: "get"
+  });
+};

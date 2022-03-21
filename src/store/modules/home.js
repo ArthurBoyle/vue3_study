@@ -1,10 +1,11 @@
-import { reqGetCategoryList, reqGetBannerList } from "@/api";
+import { reqGetCategoryList, reqGetBannerList, reqGetFloorList } from "@/api";
 
 export default {
   namespaced: true,
   state: {
     categoryList: [],
-    bannerList: []
+    bannerList: [],
+    floorList: []
   },
   actions: {
     async getCategoryList({ commit }) {
@@ -18,6 +19,12 @@ export default {
       if (code === 200) {
         commit("setBannerList", data);
       }
+    },
+    async getFloorList({ commit }) {
+      const { code, data } = await reqGetFloorList();
+      if (code === 200) {
+        commit("setFloorList", data);
+      }
     }
   },
   mutations: {
@@ -26,6 +33,9 @@ export default {
     },
     setBannerList(state, payload) {
       state.bannerList = payload;
+    },
+    setFloorList(state, payload) {
+      state.floorList = payload;
     }
   }
 };
