@@ -2,20 +2,6 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <!--banner轮播-->
-        <!--        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" alt="" />
-            </div>
-          </div>
-          &lt;!&ndash; 如果需要分页器 &ndash;&gt;
-          <div class="swiper-pagination"></div>
-
-          &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>-->
         <swiper :modules="[Navigation]" :navigation="true">
           <swiper-slide v-for="item in bannerList" :key="item.id">
             <img :src="item.imgUrl" alt="item.imgUrl" />
