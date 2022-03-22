@@ -21,15 +21,7 @@
               <img :src="list.bigImg" alt="" />
             </div>
             <div class="floorBanner">
-              <swiper
-                :modules="[Navigation, Pagination]"
-                :navigation="true"
-                :pagination="{ clickable: true }"
-              >
-                <swiper-slide v-for="item in list.carouselList" :key="item.id">
-                  <img :src="item.imgUrl" alt="item.imgUrl" />
-                </swiper-slide>
-              </swiper>
+              <Swiper :data="list.carouselList" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -61,11 +53,11 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
-import { Navigation, Pagination } from "swiper";
-import "swiper/swiper-bundle.min.css";
+import Swiper from "@/components/Swiper";
 
-defineProps({ list: Object });
+defineProps({
+  list: { type: Object, required: true }
+});
 </script>
 
 <style scoped lang="less">
