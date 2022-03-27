@@ -26,7 +26,11 @@
       <div class="fl key">{{ item.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="attrValue in item.attrValueList" :key="attrValue">
+          <li
+            v-for="attrValue in item.attrValueList"
+            :key="attrValue"
+            @click="$emit('getAttr', item, attrValue)"
+          >
             <a>{{ attrValue }}</a>
           </li>
         </ul>
@@ -40,7 +44,7 @@
 import { defineEmits } from "vue";
 import { useStore } from "vuex";
 
-defineEmits(["getTradeMark"]);
+defineEmits(["getTradeMark", "getAttr"]);
 
 const store = useStore();
 </script>

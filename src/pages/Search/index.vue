@@ -23,11 +23,22 @@
               {{ searchParams.tradeMark.split(":")[1] }}
               <i @click="handleClearTradeMark">×</i>
             </li>
+            <li
+              class="with-x"
+              v-for="(item, index) in searchParams.props"
+              :key="item.split(':')[0]"
+            >
+              {{ item.split(":")[1] }}
+              <i @click="handleClearAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @getTradeMark="getTradeMark" />
+        <SearchSelector
+          @getTradeMark="handleGetTradeMark"
+          @getAttr="handleGetAttr"
+        />
 
         <!--details-->
         <div class="details clearfix">
@@ -197,13 +208,29 @@ const handleClearParams = () => {
   router.push({ name: "search", query: route.query });
 };
 
-const getTradeMark = (tradeMark) => {
+const handleGetTradeMark = (tradeMark) => {
   searchParams.tradeMark = `${tradeMark.tmId}:${tradeMark.tmName}`;
   handleSearch();
 };
 
 const handleClearTradeMark = () => {
   delete searchParams.tradeMark;
+  handleSearch();
+};
+
+const handleGetAttr = (attrsList, attrValue) => {
+  if (!searchParams.props) {
+    searchParams.props = [];
+  }
+  const currentValue = `${attrsList.attrId}:${attrValue}:${attrsList.attrName}`;
+  if (searchParams.props.indexOf(currentValue) === -1) {
+    searchParams.props?.push(currentValue);
+    handleSearch();
+  }
+};
+
+const handleClearAttr = (index) => {
+  searchParams.props?.splice(index, 1);
   handleSearch();
 };
 </script>
