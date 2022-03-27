@@ -1,11 +1,13 @@
 <template>
-  <TypeNav />
-  <ListContainer />
-  <TodayRecommend />
-  <Rank />
-  <Like />
-  <Floor v-for="item in floorList" :key="item.id" :list="item" />
-  <Brand />
+  <div>
+    <TypeNav />
+    <ListContainer />
+    <TodayRecommend />
+    <Rank />
+    <Like />
+    <Floor v-for="item in floorList" :key="item.id" :list="item" />
+    <Brand />
+  </div>
 </template>
 
 <script setup>

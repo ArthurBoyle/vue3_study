@@ -36,7 +36,8 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
-            v-model="keyword"
+            :value="keyword"
+            @input="emit('onInput', $event.target.value)"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
@@ -52,18 +53,19 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { useRouter, useRoute } from "vue-router";
+
+const props = defineProps({ keyword: String });
+const emit = defineEmits(["onInput"]);
 
 const router = useRouter();
 const route = useRoute();
 
-const keyword = ref("");
-
 const handleSearch = () => {
   router.push({
     name: "search",
-    params: { keyword: keyword.value },
+    params: { keyword: props.keyword },
     query: route.query
   });
 };
