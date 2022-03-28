@@ -45,23 +45,31 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: getSelectedNavbar() === '1' }">
+                  <a @click="handleChangeNavbar('1')">
+                    综合
+                    <span
+                      v-show="getSelectedNavbar() === '1'"
+                      class="iconfont"
+                      :class="{
+                        'icon-jiantou_xiangshang': getDirection() === 'asc',
+                        'icon-jiantou_xiangxia': getDirection() === 'desc'
+                      }"
+                    />
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{ active: getSelectedNavbar() === '2' }">
+                  <a @click="handleChangeNavbar('2')">
+                    价格
+                    <span
+                      v-show="getSelectedNavbar() === '2'"
+                      class="iconfont"
+                      :class="{
+                        'icon-jiantou_xiangshang': getDirection() === 'asc',
+                        'icon-jiantou_xiangxia': getDirection() === 'desc'
+                      }"
+                    />
+                  </a>
                 </li>
               </ul>
             </div>
@@ -175,7 +183,8 @@ const store = useStore();
 
 const searchParams = reactive({
   ...route.params,
-  ...route.query
+  ...route.query,
+  order: "1:asc"
 });
 
 onMounted(() => {
@@ -231,6 +240,25 @@ const handleGetAttr = (attrsList, attrValue) => {
 
 const handleClearAttr = (index) => {
   searchParams.props?.splice(index, 1);
+  handleSearch();
+};
+
+const getSelectedNavbar = () => {
+  return searchParams.order.split(":")[0];
+};
+
+const getDirection = () => {
+  return searchParams.order.split(":")[1];
+};
+
+const handleChangeNavbar = (selectedNavbar) => {
+  if (selectedNavbar === getSelectedNavbar()) {
+    searchParams.order = `${selectedNavbar}:${
+      getDirection() === "desc" ? "asc" : "desc"
+    }`;
+  } else {
+    searchParams.order = `${selectedNavbar}:${getDirection()}`;
+  }
   handleSearch();
 };
 </script>
