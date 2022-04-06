@@ -13,6 +13,7 @@
 <script setup>
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import TypeNav from "@/components/TypeNav";
 import ListContainer from "./components/ListContainer";
 import TodayRecommend from "./components/TodayRecommend";
 import Rank from "./components/Rank";
