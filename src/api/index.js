@@ -26,3 +26,9 @@ export const reqGetSearchInfo = (params) => {
     data: params
   });
 };
+
+export const reqGetDetailInfo = (skuId) => {
+  return request(`/item/${skuId}`, {
+    method: "get"
+  });
+};
