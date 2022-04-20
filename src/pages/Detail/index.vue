@@ -104,9 +104,20 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  :value="skuNum"
+                  @input="handleChangeSkuNum"
+                />
+                <a href="javascript:" class="plus" @click="skuNum += 1">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 && (skuNum -= 1)"
+                >
+                  -
+                </a>
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -289,19 +300,19 @@
         <div class="intro">
           <ul class="tab-wraped">
             <li class="active">
-              <a href="###"> 商品介绍 </a>
+              <a href="javascript:"> 商品介绍 </a>
             </li>
             <li>
-              <a href="###"> 规格与包装 </a>
+              <a href="javascript:"> 规格与包装 </a>
             </li>
             <li>
-              <a href="###"> 售后保障 </a>
+              <a href="javascript:"> 售后保障 </a>
             </li>
             <li>
-              <a href="###"> 商品评价 </a>
+              <a href="javascript:"> 商品评价 </a>
             </li>
             <li>
-              <a href="###"> 手机社区 </a>
+              <a href="javascript:"> 手机社区 </a>
             </li>
           </ul>
           <div class="tab-content">
@@ -359,6 +370,7 @@ const route = useRoute();
 const store = useStore();
 
 const currentIndex = ref(0);
+const skuNum = ref(1);
 
 onMounted(() => {
   store.dispatch("detail/getDetailInfo", route.params.skuId);
@@ -385,6 +397,11 @@ const changeActive = (spuSaleAttrValue, spuSaleAttrValueList) => {
 
 const handleChangeCurrentIndex = (index) => {
   currentIndex.value = index;
+};
+
+const handleChangeSkuNum = (e) => {
+  e.target.value = e.target.value.replace(/[^0-9]/g, "") || skuNum.value;
+  skuNum.value = e.target.value;
 };
 </script>
 
