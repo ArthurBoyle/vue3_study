@@ -1,4 +1,4 @@
-import { reqGetDetailInfo } from "@/api";
+import { reqGetDetailInfo, reqAddOrUpdateShopCart } from "@/api";
 
 export default {
   namespaced: true,
@@ -27,6 +27,12 @@ export default {
       const { code, data } = await reqGetDetailInfo(payload);
       if (code === 200) {
         commit("setDetailInfo", data);
+      }
+    },
+    async addOrUpdateShopCart(context, { skuId, skuNum }) {
+      const { code } = await reqAddOrUpdateShopCart(skuId, skuNum);
+      if (code !== 200) {
+        return Promise.reject(new Error("failed"));
       }
     }
   },

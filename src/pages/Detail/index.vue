@@ -120,7 +120,7 @@
                 </a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="handleAddShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -360,13 +360,14 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import TypeNav from "@/components/TypeNav";
 import ImageList from "./components/ImageList";
 import Zoom from "./components/Zoom";
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 
 const currentIndex = ref(0);
@@ -402,6 +403,18 @@ const handleChangeCurrentIndex = (index) => {
 const handleChangeSkuNum = (e) => {
   e.target.value = e.target.value.replace(/[^0-9]/g, "") || skuNum.value;
   skuNum.value = e.target.value;
+};
+
+const handleAddShopCart = async () => {
+  try {
+    await store.dispatch("detail/addOrUpdateShopCart", {
+      skuId: route.params.skuId,
+      skuNum: skuNum.value
+    });
+    await router.push("/addCartSuccess");
+  } catch (error) {
+    alert(error);
+  }
 };
 </script>
 
@@ -610,6 +623,7 @@ const handleChangeSkuNum = (e) => {
 
             .add {
               float: left;
+              cursor: pointer;
 
               a {
                 background-color: #e1251b;
