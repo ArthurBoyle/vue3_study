@@ -31,7 +31,6 @@
       下一页
     </button>
     <button class="total">共 {{ total }} 条</button>
-    <div>{{ startEndInterval }}</div>
   </div>
 </template>
 

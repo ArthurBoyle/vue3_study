@@ -411,7 +411,8 @@ const handleAddShopCart = async () => {
       skuId: route.params.skuId,
       skuNum: skuNum.value
     });
-    await router.push("/addCartSuccess");
+    await router.push(`/addCartSuccess?skuNum=${skuNum.value}`);
+    window.sessionStorage.setItem("skuInfo", JSON.stringify(skuInfo.value));
   } catch (error) {
     alert(error);
   }

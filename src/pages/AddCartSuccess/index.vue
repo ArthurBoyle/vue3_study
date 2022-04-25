@@ -5,17 +5,23 @@
       <div class="goods">
         <div class="left-good">
           <div class="left-pic">
-            <img src="good.skuDefaultImg" alt="" />
+            <img :src="skuInfo.skuDefaultImg" alt="" />
           </div>
           <div class="right-info">
-            <p class="title">
-              小米红米 Redmi note8 手机 梦幻蓝 全网通(4GB+64GB)
+            <p class="title">{{ skuInfo.skuName }}</p>
+            <p class="attr">
+              {{ skuInfo.skuDesc }} 数量：{{ route.query.skuNum }}
             </p>
-            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：2</p>
           </div>
         </div>
         <div class="right-gocart">
-          <a href="javascript:" class="sui-btn btn-xlarge">查看商品详情</a>
+          <a
+            href="javascript:"
+            class="sui-btn btn-xlarge"
+            @click="router.back()"
+          >
+            查看商品详情
+          </a>
           <a href="javascript:">去购物车结算 > </a>
         </div>
       </div>
@@ -23,7 +29,17 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
+
+const skuInfo = computed(() => {
+  return JSON.parse(window.sessionStorage.getItem("skuInfo"));
+});
+</script>
 
 <style lang="less" scoped>
 .cart-complete-wrap {
